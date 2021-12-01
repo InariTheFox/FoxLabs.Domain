@@ -15,10 +15,11 @@ namespace FoxLabs.Domain
     /// <summary>
     /// The base class for entities which belong to an <see cref="AggregateRoot" />.
     /// </summary>
+    /// <typeparam name="TKey">The entity key type.</typeparam>
     public abstract class Entity<TKey> : IEntity<TKey>
         where TKey : IComparable
     {
-        private List<IDomainEvent> _domainEvents;
+        private List<IDomainEvent<TKey>> _domainEvents;
 
         private int? _requestedHashCode;
 
@@ -32,7 +33,7 @@ namespace FoxLabs.Domain
         /// <summary>
         /// The read-only collection of domain events for the entity.
         /// </summary>
-        public IReadOnlyCollection<IDomainEvent> DomainEvents => _domainEvents;
+        public IReadOnlyCollection<IDomainEvent<TKey>> DomainEvents => _domainEvents;
 
         /// <summary>
         /// The unique identifier of this entity.
@@ -50,9 +51,9 @@ namespace FoxLabs.Domain
         /// <summary>
         /// Add an <see cref="IDomainEvent" /> to the entity.
         /// </summary>
-        public void AddDomainEvent(IDomainEvent @event)
+        public void AddDomainEvent(IDomainEvent<TKey> @event)
         {
-            (_domainEvents ??= new List<IDomainEvent>()).Add(@event);
+            (_domainEvents ??= new List<IDomainEvent<TKey>>()).Add(@event);
         }
 
         /// <summary>
@@ -64,7 +65,7 @@ namespace FoxLabs.Domain
         /// <summary>
         /// Remove an <see cref="IDomainEvent" /> from the entity.
         /// </summary>
-        public void RemoveDomainEvent(IDomainEvent @event)
+        public void RemoveDomainEvent(IDomainEvent<TKey> @event)
             => _domainEvents?.Remove(@event);
 
         /// <inheritdoc />

@@ -6,8 +6,20 @@ namespace FoxLabs.Domain
     /// The base class for domain events of <paramref name="TAggregate" />.
     /// </summary>
     /// <typeparam name="TAggregate">The derived aggregate root entity.</typeparam>
-    public abstract class DomainEvent<TAggregate> : IDomainEvent
-        where TAggregate : class, IAggregateRoot
+    public abstract class DomainEvent<TAggregate> : DomainEvent<TAggregate, int>
+        where TAggregate : class, IAggregateRoot<int>
+    {
+
+    }
+
+    /// <summary>
+    /// The base class for domain events of <paramref name="TAggregate" />.
+    /// </summary>
+    /// <typeparam name="TAggregate">The derived aggregate root entity.</typeparam>
+    /// <typeparam name="TKey">The entity key type.</typeparam>
+    public abstract class DomainEvent<TAggregate, TKey> : IDomainEvent<TKey>
+        where TAggregate : class, IAggregateRoot<TKey>
+        where TKey: IComparable
     {
         protected DomainEvent() { }
 
@@ -23,7 +35,7 @@ namespace FoxLabs.Domain
         /// <summary>
         /// The unique identifier of the root entity.
         /// </summary>
-        public int RootId { get; private set; }
+        public TKey RootId { get; private set; }
 
         /// <summary>
         /// The version of the root entity at the time of this event.

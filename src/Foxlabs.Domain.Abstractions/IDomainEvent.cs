@@ -6,9 +6,11 @@ namespace FoxLabs.Domain
     /// <summary>
     /// The basic interface for a domain event.
     /// </summary>
-    public interface IDomainEvent  : INotification
+    /// <typeparam name="TKey">The entity key type.</typeparam>
+    public interface IDomainEvent<TKey> : INotification
+        where TKey : IComparable
     {
-        int RootId { get; }
+        TKey RootId { get; }
 
         long RootVersion { get; }
 

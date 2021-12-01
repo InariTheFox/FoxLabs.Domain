@@ -18,6 +18,7 @@ namespace FoxLabs.Domain
     /// The base class for all aggregate domain entities.
     /// </summary>
     /// <typeparam name="TAggregate">The derived aggregate root entity.</typeparam>
+    /// <typeparam name="TKey">The entity key type.</typeparam>
     public abstract class AggregateRoot<TAggregate, TKey> : Entity<TKey>, IAggregateRoot<TKey>
         where TAggregate : class, IAggregateRoot<TKey>
         where TKey : IComparable
@@ -37,23 +38,23 @@ namespace FoxLabs.Domain
         /// Applies the <see cref="IDomainEvent" /> to the entity.
         /// </summary>
         /// <remarks>
-        protected abstract void Apply(IDomainEvent @event);
+        protected abstract void Apply(IDomainEvent<TKey> @event);
 
         /// <summary>
         /// Create an instance of <paramref name="TAggregate" />.
         /// </summary>
         /// <returns><paramref name="TAggregate" /></returns>
         /// <typeparam name="TAggregate">The derivied aggregate root entity.</typeparam>
-        public static T Create<T>(IEnumerable<IDomainEvent> events)
-            where T : AggregateRoot<TAggregate, TKey>
+        public static TAggregate Create(IEnumerable<IDomainEvent<TKey>> events)
         {
             Check.NotEmpty(events, nameof(events));
 
-            var instance = Activator.CreateInstance<T>();
+            var instance = Activator.CreateInstance<TAggregate>();
+            var method = typeof(AggregateRoot<>).GetMethod(nameof(Apply));
 
             foreach (var @event in events)
             {
-                instance.Apply(@event);
+                method.Invoke(instance, new object[] { @event });
             }
 
             return instance;
