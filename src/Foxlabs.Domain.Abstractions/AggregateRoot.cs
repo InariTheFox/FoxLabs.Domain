@@ -18,7 +18,7 @@ namespace FoxLabs.Domain
     /// The base class for all aggregate domain entities.
     /// </summary>
     /// <typeparam name="TAggregate">The derived aggregate root entity.</typeparam>
-    public abstract class AggregateRoot<TAggregate, TKey> : Entity<TKey>, IAggregateRoot
+    public abstract class AggregateRoot<TAggregate, TKey> : Entity<TKey>, IAggregateRoot<TKey>
         where TAggregate : class, IAggregateRoot
         where TKey : IComparable
     {
