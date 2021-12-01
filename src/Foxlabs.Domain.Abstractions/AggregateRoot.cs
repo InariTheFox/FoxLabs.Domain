@@ -8,7 +8,7 @@ namespace FoxLabs.Domain
     /// </summary>
     /// <typeparam name="TAggregate">The derived aggregate root entity.</typeparam>
     public abstract class AggregateRoot<TAggregate> : AggregateRoot<TAggregate, int>
-        where TAggregate : class, IAggregateRoot
+        where TAggregate : class, IAggregateRoot<int>
     {
         protected AggregateRoot(int id)
             : base(id) { }
@@ -19,7 +19,7 @@ namespace FoxLabs.Domain
     /// </summary>
     /// <typeparam name="TAggregate">The derived aggregate root entity.</typeparam>
     public abstract class AggregateRoot<TAggregate, TKey> : Entity<TKey>, IAggregateRoot<TKey>
-        where TAggregate : class, IAggregateRoot
+        where TAggregate : class, IAggregateRoot<TKey>
         where TKey : IComparable
     {
         protected AggregateRoot() { }
