@@ -7,12 +7,24 @@ namespace FoxLabs.Domain
     /// The base class for all aggregate domain entities.
     /// </summary>
     /// <typeparam name="TAggregate">The derived aggregate root entity.</typeparam>
-    public abstract class AggregateRoot<TAggregate> : Entity, IAggregateRoot
+    public abstract class AggregateRoot<TAggregate> : AggregateRoot<TAggregate, int>
         where TAggregate : class, IAggregateRoot
+    {
+        protected AggregateRoot(int id)
+            : base(id) { }
+    }
+
+    /// <summary>
+    /// The base class for all aggregate domain entities.
+    /// </summary>
+    /// <typeparam name="TAggregate">The derived aggregate root entity.</typeparam>
+    public abstract class AggregateRoot<TAggregate, TKey> : Entity<TKey>, IAggregateRoot
+        where TAggregate : class, IAggregateRoot
+        where TKey : IComparable
     {
         protected AggregateRoot() { }
 
-        protected AggregateRoot(int id)
+        protected AggregateRoot(TKey id)
             : base(id)
         { }
 
@@ -33,7 +45,7 @@ namespace FoxLabs.Domain
         /// <returns><paramref name="TAggregate" /></returns>
         /// <typeparam name="TAggregate">The derivied aggregate root entity.</typeparam>
         public static T Create<T>(IEnumerable<IDomainEvent> events)
-            where T : AggregateRoot<TAggregate>
+            where T : AggregateRoot<TAggregate, TKey>
         {
             Check.NotEmpty(events, nameof(events));
 

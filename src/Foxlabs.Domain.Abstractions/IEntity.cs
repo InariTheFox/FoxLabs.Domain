@@ -1,11 +1,13 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 
 namespace FoxLabs.Domain
 {
     /// <summary>
     /// The basic interface for an entity.
     /// </summary>
-    public interface IEntity
+    public interface IEntity<TKey>
+        where TKey : IComparable
     {
         /// <summary>
         /// A collection of <see cref="IDomainEvent" />s.
@@ -15,7 +17,7 @@ namespace FoxLabs.Domain
         /// <summary>
         /// The identifier of the entity.
         /// </summary>
-        int Id { get; }
+        TKey Id { get; }
 
         /// <summary>
         /// Gets whether the entity has been persisted or not.

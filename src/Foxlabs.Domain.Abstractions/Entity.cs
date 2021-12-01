@@ -1,19 +1,30 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 
 namespace FoxLabs.Domain
 {
     /// <summary>
     /// The base class for entities which belong to an <see cref="AggregateRoot" />.
     /// </summary>
-    public abstract class Entity : IEntity
+    public abstract class Entity: Entity<int>
+    {
+        protected Entity(int id)
+            : base(id) { }
+    }
+
+    /// <summary>
+    /// The base class for entities which belong to an <see cref="AggregateRoot" />.
+    /// </summary>
+    public abstract class Entity<TKey> : IEntity<TKey>
+        where TKey : IComparable
     {
         private List<IDomainEvent> _domainEvents;
-        
+
         private int? _requestedHashCode;
 
         protected Entity() { }
 
-        protected Entity(int id)
+        protected Entity(TKey id)
         {
             Id = id;
         }
@@ -26,7 +37,7 @@ namespace FoxLabs.Domain
         /// <summary>
         /// The unique identifier of this entity.
         /// </summary>
-        public int Id { get; protected set; }
+        public TKey Id { get; protected set; }
 
         /// <summary>
         /// Gets whether the entity is transient, and has not been persisted.
@@ -59,7 +70,7 @@ namespace FoxLabs.Domain
         /// <inheritdoc />
         public override bool Equals(object obj)
         {
-            if (obj == null || !(obj is Entity))
+            if (obj == null || !(obj is Entity<TKey>))
             {
                 return false;
             }
@@ -74,7 +85,7 @@ namespace FoxLabs.Domain
                 return false;
             }
 
-            Entity item = (Entity)obj;
+            Entity<TKey> item = (Entity<TKey>)obj;
 
             if (item.IsTransient || IsTransient)
             {
@@ -103,7 +114,7 @@ namespace FoxLabs.Domain
         }
 
         /// <inheritdoc />
-        public static bool operator ==(Entity left, Entity right)
+        public static bool operator ==(Entity<TKey> left, Entity<TKey> right)
         {
             if (Equals(left, null))
             {
@@ -116,7 +127,7 @@ namespace FoxLabs.Domain
         }
 
         /// <inheritdoc />
-        public static bool operator !=(Entity left, Entity right)
+        public static bool operator !=(Entity<TKey> left, Entity<TKey> right)
             => !(left == right);
     }
 }
