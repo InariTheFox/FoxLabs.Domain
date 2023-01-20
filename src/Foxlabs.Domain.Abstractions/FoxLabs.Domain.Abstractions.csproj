@@ -6,7 +6,7 @@
     <Version>1.0.9</Version>
     <Authors>Brandon Dobbie</Authors>
     <Company></Company>
-    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+    <GeneratePackageOnBuild>False</GeneratePackageOnBuild>
     <Description>Provides a lightweight framework for building Domain-Driven (DDD) applications, using MediatR as a base for exposing eventing. Contact support@fox-labs.io for support or feature requests.</Description>
     <Copyright>© 2022 - Brandon Dobbie</Copyright>
     <PackageProjectUrl>https://github.com/InariTheFox/FoxLabs.Domain</PackageProjectUrl>
