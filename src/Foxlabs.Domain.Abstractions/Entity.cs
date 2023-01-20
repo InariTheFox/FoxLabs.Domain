@@ -8,6 +8,9 @@ namespace FoxLabs.Domain
     /// </summary>
     public abstract class Entity: Entity<int>
     {
+        protected Entity()
+            : base() { }
+
         protected Entity(int id)
             : base(id) { }
     }
@@ -19,8 +22,6 @@ namespace FoxLabs.Domain
     public abstract class Entity<TKey> : IEntity<TKey>
         where TKey : IComparable
     {
-        private List<IDomainEvent<TKey>> _domainEvents;
-
         private int? _requestedHashCode;
 
         protected Entity() { }
@@ -29,11 +30,6 @@ namespace FoxLabs.Domain
         {
             Id = id;
         }
-
-        /// <summary>
-        /// The read-only collection of domain events for the entity.
-        /// </summary>
-        public IReadOnlyCollection<IDomainEvent<TKey>> DomainEvents => _domainEvents;
 
         /// <summary>
         /// The unique identifier of this entity.
@@ -47,26 +43,6 @@ namespace FoxLabs.Domain
         /// <c>True</c> if the entity is not-persisted, otherwise <c>false</c>.
         /// </value>
         public bool IsTransient => Id.Equals(default);
-
-        /// <summary>
-        /// Add an <see cref="IDomainEvent" /> to the entity.
-        /// </summary>
-        public void AddDomainEvent(IDomainEvent<TKey> @event)
-        {
-            (_domainEvents ??= new List<IDomainEvent<TKey>>()).Add(@event);
-        }
-
-        /// <summary>
-        /// Clears the collection of <see cref="IDomainEvent" />s on the entity.
-        /// </summary>
-        public void ClearDomainEvents()
-            => _domainEvents?.Clear();
-
-        /// <summary>
-        /// Remove an <see cref="IDomainEvent" /> from the entity.
-        /// </summary>
-        public void RemoveDomainEvent(IDomainEvent<TKey> @event)
-            => _domainEvents?.Remove(@event);
 
         /// <inheritdoc />
         public override bool Equals(object obj)

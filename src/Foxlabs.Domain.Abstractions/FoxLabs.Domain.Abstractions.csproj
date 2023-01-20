@@ -3,13 +3,16 @@
   <PropertyGroup>
     <TargetFramework>net5.0</TargetFramework>
     <PackageId>FoxLabs.Domain.Abstractions</PackageId>
-    <Version>1.0.4</Version>
+    <Version>1.0.9</Version>
     <Authors>Brandon Dobbie</Authors>
     <Company></Company>
+    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+    <Description>Provides a lightweight framework for building Domain-Driven (DDD) applications, using MediatR as a base for exposing eventing. Contact support@fox-labs.io for support or feature requests.</Description>
+    <Copyright>© 2022 - Brandon Dobbie</Copyright>
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="MediatR" Version="9.0.0" />
+    <PackageReference Include="MediatR" Version="10.0.0" />
   </ItemGroup>
 
 </Project>

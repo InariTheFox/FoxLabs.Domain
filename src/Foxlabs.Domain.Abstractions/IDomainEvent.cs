@@ -10,6 +10,8 @@ namespace FoxLabs.Domain
     public interface IDomainEvent<TKey> : INotification
         where TKey : IComparable
     {
+        IAggregateRoot RootAggregate { get; }
+
         TKey RootId { get; }
 
         long RootVersion { get; }

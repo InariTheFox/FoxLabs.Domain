@@ -8,9 +8,7 @@ namespace FoxLabs.Domain
     /// <typeparam name="TAggregate">The derived aggregate root entity.</typeparam>
     public abstract class DomainEvent<TAggregate> : DomainEvent<TAggregate, int>
         where TAggregate : class, IAggregateRoot<int>
-    {
-
-    }
+    { }
 
     /// <summary>
     /// The base class for domain events of <paramref name="TAggregate" />.
@@ -27,10 +25,13 @@ namespace FoxLabs.Domain
         {
             Check.NotNull(aggregate, nameof(aggregate));
 
+            RootAggregate = aggregate;
             RootId = aggregate.Id;
             RootVersion = aggregate.Version;
             Timestamp = DateTimeOffset.UtcNow;
         }
+
+        public TAggregate RootAggregate { get; }
 
         /// <summary>
         /// The unique identifier of the root entity.
@@ -46,5 +47,8 @@ namespace FoxLabs.Domain
         /// The timestamp of when this event was fired.
         /// </summary>
         public DateTimeOffset Timestamp { get; private set; }
+
+        IAggregateRoot IDomainEvent<TKey>.RootAggregate
+            => (IAggregateRoot)RootAggregate;
     }
 }

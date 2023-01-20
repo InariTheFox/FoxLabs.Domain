@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Text.Json.Serialization;
 
 namespace FoxLabs.Domain
 {
@@ -10,8 +11,17 @@ namespace FoxLabs.Domain
     public abstract class AggregateRoot<TAggregate> : AggregateRoot<TAggregate, int>
         where TAggregate : class, IAggregateRoot<int>
     {
+        protected AggregateRoot()
+            : base() { }
+
         protected AggregateRoot(int id)
             : base(id) { }
+
+        /// <summary>
+        /// Applies the <see cref="IDomainEvent" /> to the entity.
+        /// </summary>
+        /// <remarks>
+        protected override abstract void Apply(IDomainEvent<int> @event);
     }
 
     /// <summary>
@@ -23,6 +33,8 @@ namespace FoxLabs.Domain
         where TAggregate : class, IAggregateRoot<TKey>
         where TKey : IComparable
     {
+        private List<IDomainEvent<TKey>> _domainEvents;
+
         protected AggregateRoot() { }
 
         protected AggregateRoot(TKey id)
@@ -30,15 +42,35 @@ namespace FoxLabs.Domain
         { }
 
         /// <summary>
+        /// The read-only collection of domain events for the entity.
+        /// </summary>
+        [JsonIgnore]
+        public IReadOnlyCollection<IDomainEvent<TKey>> DomainEvents => _domainEvents;
+
+        /// <summary>
         /// The version of the aggregate.
         /// </summary>
         public long Version { get; private set; }
 
         /// <summary>
-        /// Applies the <see cref="IDomainEvent" /> to the entity.
+        /// Add an <see cref="IDomainEvent" /> to the entity.
         /// </summary>
-        /// <remarks>
-        protected abstract void Apply(IDomainEvent<TKey> @event);
+        public void AddDomainEvent(IDomainEvent<TKey> @event)
+        {
+            (_domainEvents ??= new List<IDomainEvent<TKey>>()).Add(@event);
+        }
+
+        /// <summary>
+        /// Clears the collection of <see cref="IDomainEvent" />s on the entity.
+        /// </summary>
+        public void ClearDomainEvents()
+            => _domainEvents?.Clear();
+
+        /// <summary>
+        /// Remove an <see cref="IDomainEvent" /> from the entity.
+        /// </summary>
+        public void RemoveDomainEvent(IDomainEvent<TKey> @event)
+            => _domainEvents?.Remove(@event);
 
         /// <summary>
         /// Create an instance of <paramref name="TAggregate" />.
@@ -59,5 +91,11 @@ namespace FoxLabs.Domain
 
             return instance;
         }
+
+        /// <summary>
+        /// Applies the <see cref="IDomainEvent" /> to the entity.
+        /// </summary>
+        /// <remarks>
+        protected abstract void Apply(IDomainEvent<TKey> @event);
     }
 }

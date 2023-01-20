@@ -1,5 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
+using System.Text.Json.Serialization;
 
 namespace FoxLabs.Domain
 {
@@ -11,11 +11,6 @@ namespace FoxLabs.Domain
         where TKey : IComparable
     {
         /// <summary>
-        /// A collection of <see cref="IDomainEvent" />s.
-        /// </summary>
-        IReadOnlyCollection<IDomainEvent<TKey>> DomainEvents { get; }
-
-        /// <summary>
         /// The identifier of the entity.
         /// </summary>
         TKey Id { get; }
@@ -23,21 +18,7 @@ namespace FoxLabs.Domain
         /// <summary>
         /// Gets whether the entity has been persisted or not.
         /// </summary>
+        [JsonIgnore]
         bool IsTransient { get; }
-
-        /// <summary>
-        /// Adds an <see cref="IDomainEvent" /> to the entity.
-        /// </summary>
-        void AddDomainEvent(IDomainEvent<TKey> @event);
-
-        /// <summary>
-        /// Clears the collection of <see cref="IDomainEvent" />s on the entity.
-        /// </summary>
-        void ClearDomainEvents();
-
-        /// <summary>
-        /// Remove an <see cref="IDomainEvent" /> from the entity.
-        /// </summary>
-        void RemoveDomainEvent(IDomainEvent<TKey> @event);
     }
 }
