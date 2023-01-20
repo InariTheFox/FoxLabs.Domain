@@ -1,7 +1,7 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFramework>net5.0</TargetFramework>
+    <TargetFramework>net6.0</TargetFramework>
     <PackageId>FoxLabs.Domain.Abstractions</PackageId>
     <Version>1.0.9</Version>
     <Authors>Brandon Dobbie</Authors>
@@ -9,7 +9,23 @@
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
     <Description>Provides a lightweight framework for building Domain-Driven (DDD) applications, using MediatR as a base for exposing eventing. Contact support@fox-labs.io for support or feature requests.</Description>
     <Copyright>© 2022 - Brandon Dobbie</Copyright>
+    <PackageProjectUrl>https://github.com/InariTheFox/FoxLabs.Domain</PackageProjectUrl>
+    <PackageReadmeFile>readme.md</PackageReadmeFile>
+    <RepositoryUrl>https://github.com/InariTheFox/FoxLabs.Domain</RepositoryUrl>
+    <PackageTags>domain driven design;ddd;aggregate;aggregates;domain events</PackageTags>
+    <PackageLicenseFile>LICENSE</PackageLicenseFile>
   </PropertyGroup>
+
+  <ItemGroup>
+    <None Include="..\..\LICENSE">
+      <Pack>True</Pack>
+      <PackagePath>\</PackagePath>
+    </None>
+    <None Include="..\..\readme.md">
+      <Pack>True</Pack>
+      <PackagePath>\</PackagePath>
+    </None>
+  </ItemGroup>
 
   <ItemGroup>
     <PackageReference Include="MediatR" Version="10.0.0" />
