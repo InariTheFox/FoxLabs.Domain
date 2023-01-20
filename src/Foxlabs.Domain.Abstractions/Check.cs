@@ -8,7 +8,7 @@ namespace FoxLabs
     /// A class of various static methods useful in providing
     /// quick and inline capable guards for parameters.
     /// </summary>
-    internal static class Check
+    public static class Check
     {
         /// <summary>
         /// Check if the string parameter is not empty, but can be null.
