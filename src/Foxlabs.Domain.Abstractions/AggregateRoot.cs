@@ -50,7 +50,7 @@ namespace FoxLabs.Domain
         /// <summary>
         /// The version of the aggregate.
         /// </summary>
-        public long Version { get; private set; }
+        public long Version { get; protected set; }
 
         /// <summary>
         /// Add an <see cref="IDomainEvent" /> to the entity.
