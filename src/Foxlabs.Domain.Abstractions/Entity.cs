@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 
 namespace FoxLabs.Domain
 {
@@ -42,7 +41,7 @@ namespace FoxLabs.Domain
         /// <value>
         /// <c>True</c> if the entity is not-persisted, otherwise <c>false</c>.
         /// </value>
-        public bool IsTransient => Id.Equals(default);
+        public bool IsTransient => Id?.Equals(default) ?? true;
 
         /// <inheritdoc />
         public override bool Equals(object obj)
@@ -79,7 +78,7 @@ namespace FoxLabs.Domain
             {
                 if (!_requestedHashCode.HasValue)
                 {
-                    _requestedHashCode = this.Id.GetHashCode() ^ 31; // XOR for random distribution (http://blogs.msdn.com/b/ericlippert/archive/2011/02/28/guidelines-and-rules-for-gethashcode.aspx)
+                    _requestedHashCode = Id.GetHashCode() ^ 31; // XOR for random distribution (http://blogs.msdn.com/b/ericlippert/archive/2011/02/28/guidelines-and-rules-for-gethashcode.aspx)
                 }
 
                 return _requestedHashCode.Value;
