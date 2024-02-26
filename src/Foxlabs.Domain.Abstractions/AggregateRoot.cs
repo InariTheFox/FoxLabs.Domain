@@ -35,7 +35,8 @@ namespace FoxLabs.Domain
     {
         private List<IDomainEvent<TKey>> _domainEvents;
 
-        protected AggregateRoot() { }
+        protected AggregateRoot()
+            : base() { }
 
         protected AggregateRoot(TKey id)
             : base(id)
