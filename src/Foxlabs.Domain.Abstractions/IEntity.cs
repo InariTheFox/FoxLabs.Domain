@@ -9,7 +9,15 @@ namespace FoxLabs.Domain
     /// </summary>
     public interface IEntity
     {
+        /// <summary>
+        /// The read-only collection of domain events for the entity.
+        /// </summary>
         IReadOnlyCollection<IDomainEvent> DomainEvents { get; }
+
+        /// <summary>
+        /// Clears the collection of <see cref="IDomainEvent" />s on the entity.
+        /// </summary>
+        void ClearDomainEvents();
     }
 
     /// <summary>
@@ -39,11 +47,6 @@ namespace FoxLabs.Domain
         /// Adds an <see cref="IDomainEvent" /> to the entity.
         /// </summary>
         void AddDomainEvent(IDomainEvent<TKey> @event);
-
-        /// <summary>
-        /// Clears the collection of <see cref="IDomainEvent" />s on the entity.
-        /// </summary>
-        void ClearDomainEvents();
 
         /// <summary>
         /// Remove an <see cref="IDomainEvent" /> from the entity.
