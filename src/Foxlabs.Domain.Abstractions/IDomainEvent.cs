@@ -8,8 +8,6 @@ namespace FoxLabs.Domain
     /// </summary>
     public interface IDomainEvent : INotification
     {
-        IAggregateRoot RootAggregate { get; }
-
         long RootVersion { get; }
 
         DateTimeOffset Timestamp { get; }
@@ -22,6 +20,8 @@ namespace FoxLabs.Domain
     public interface IDomainEvent<TKey> : IDomainEvent
         where TKey : IComparable
     {
+        IAggregateRoot<TKey> RootAggregate { get; }
+
         TKey RootId { get; }
     }
 }

@@ -48,7 +48,7 @@ namespace FoxLabs.Domain
         /// </summary>
         public DateTimeOffset Timestamp { get; private set; }
 
-        IAggregateRoot IDomainEvent<TKey>.RootAggregate
-            => (IAggregateRoot)RootAggregate;
+        IAggregateRoot<TKey> IDomainEvent<TKey>.RootAggregate
+            => RootAggregate;
     }
 }
