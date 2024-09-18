@@ -3,7 +3,7 @@
   <PropertyGroup>
     <TargetFramework>net8.0</TargetFramework>
     <PackageId>FoxLabs.Domain.Abstractions</PackageId>
-    <Version>1.1.1.0</Version>
+    <Version>1.1.2.0</Version>
     <Authors>Brandon Dobbie</Authors>
     <Company></Company>
     <GeneratePackageOnBuild>False</GeneratePackageOnBuild>
@@ -28,7 +28,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="MediatR" Version="10.0.0" />
+    <PackageReference Include="MediatR" Version="12.4.0" />
   </ItemGroup>
 
 </Project>

@@ -8,6 +8,10 @@ namespace FoxLabs.Domain
     /// </summary>
     public interface IDomainEvent : INotification
     {
+        IAggregateRoot RootAggregate { get; }
+
+        object RootId { get; }
+
         long RootVersion { get; }
 
         DateTimeOffset Timestamp { get; }

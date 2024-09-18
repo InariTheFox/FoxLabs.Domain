@@ -8,7 +8,12 @@ namespace FoxLabs.Domain
     /// <typeparam name="TAggregate">The derived aggregate root entity.</typeparam>
     public abstract class DomainEvent<TAggregate> : DomainEvent<TAggregate, int>
         where TAggregate : class, IAggregateRoot<int>
-    { }
+    { 
+        protected DomainEvent() { }
+
+        protected DomainEvent(TAggregate aggregate)
+            :base(aggregate) { }
+    }
 
     /// <summary>
     /// The base class for domain events of <paramref name="TAggregate" />.
@@ -31,6 +36,7 @@ namespace FoxLabs.Domain
             Timestamp = DateTimeOffset.UtcNow;
         }
 
+        [System.Text.Json.Serialization.JsonIgnore]
         public TAggregate RootAggregate { get; }
 
         /// <summary>
@@ -48,7 +54,13 @@ namespace FoxLabs.Domain
         /// </summary>
         public DateTimeOffset Timestamp { get; private set; }
 
+        IAggregateRoot IDomainEvent.RootAggregate
+            => RootAggregate;
+
         IAggregateRoot<TKey> IDomainEvent<TKey>.RootAggregate
             => RootAggregate;
+
+        object IDomainEvent.RootId 
+            => RootId;
     }
 }
