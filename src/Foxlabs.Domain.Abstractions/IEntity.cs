@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Text.Json.Serialization;
 
 namespace FoxLabs.Domain
 {
@@ -35,7 +34,7 @@ namespace FoxLabs.Domain
         /// <summary>
         /// Gets whether the entity has been persisted or not.
         /// </summary>
-        [JsonIgnore]
+        [System.Text.Json.Serialization.JsonIgnore]
         bool IsTransient { get; }
 
         /// <summary>

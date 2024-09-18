@@ -51,6 +51,7 @@ namespace FoxLabs.Domain
         /// <value>
         /// <c>True</c> if the entity is not-persisted, otherwise <c>false</c>.
         /// </value>
+        [System.Text.Json.Serialization.JsonIgnore]
         public bool IsTransient => Id?.Equals(default) ?? true;
 
         IReadOnlyCollection<IDomainEvent> IEntity.DomainEvents
